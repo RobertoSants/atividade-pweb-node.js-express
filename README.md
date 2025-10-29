@@ -1,33 +1,34 @@
 # Atividade de PWEB — Node.js e Express
-Professor: **Leo Fernandes (IFAL)**  
-Aluno: **Roberto dos Santos Silva Junior**
+**Professor:** Leo Fernandes (IFAL)  
+**Aluno:** Roberto dos Santos Silva Junior  
 
 ---
 
 ## Sobre o projeto
 
-Este repositório contém a atividade prática da disciplina **Programação Web (PWEB)**, ministrada pelo professor **Leo Fernandes**, no **Instituto Federal de Alagoas (IFAL)**.  
-O objetivo foi **aprender a criar e executar aplicações Node.js com Express e EJS**, tanto manualmente quanto usando o **Express Generator**.
+Este repositório faz parte da disciplina **Programação Web (PWEB)**.  
+O objetivo foi aprender a criar uma aplicação **Node.js com Express e EJS**, seguindo os tutoriais do professor Leo Fernandes.
 
-A proposta consistiu em seguir dois tutoriais fornecidos pelo professor:
-1. **Criar um projeto Node.js/Express manualmente**
-2. **Gerar uma aplicação automaticamente com o Express Generator**
-
----
-
-## O que foi aprendido
-
-Durante o desenvolvimento desta atividade, foi praticado:
-
-- Instalação e uso do **Node.js** e **npm**
-- Criação de um **servidor Express** do zero
-- Configuração do **EJS** como motor de visualização
-- Organização de pastas (`views`, `public`, `routes`)
-- Criação e personalização de **rotas e templates**
-- Publicação do código no **GitHub** usando **Git**
+Foram feitos **dois projetos**:
+1. Um criado **manualmente**, com Express e EJS.
+2. Outro usando o **Express Generator**, que monta a estrutura automaticamente.
 
 ---
 
-## Estrutura do repositório
+## Como executar
 
-O repositório contém **duas pastas principais**, correspondendo aos dois métodos abordados:
+### Projeto 1 — Manual (Node.js e EJS)
+```bash
+cd 1-manual
+npm install
+node app.
+```
+Acesse em: http://localhost:3000
+
+### Projeto 1 — Express Generator
+```bash
+cd 2-generator
+npm install
+npm start
+```
+Acesse em: http://localhost:3000
