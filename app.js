@@ -16,7 +16,7 @@ app.get('/', (req, res) => {
 
 //Outras Rotas
 app.get('/sobre', (req, res) => {
-    res.render('index', { title: 'Sobre Nós'});
+    res.render('sobre', { title: 'Sobre Nós'});
 });
 
 //Rota para "Serviços"
