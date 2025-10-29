@@ -1,6 +1,35 @@
+/* Aplica um estilo padrão a toda página */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    background-color: #e3f2fd;
     color: #333;
     text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+/* Menu de navegação */
+nav {
+    background-color: #1565c0;
+    padding: 10px;
+}
+
+/* Links do menu */
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+/* Efeito ao passar o mouse */
+nav a:hover {
+    text-decoration: underline;
+}
+
+/* Rodapé */
+footer {
+    margin-top: 30px;
+    font-size: 14px;
+    color: #555;
+    padding: 10px;
 }
