@@ -1,35 +1,35 @@
-//app.js
+// Importa o framework Express (usado para criar o servidor web)
 const express = require('express');
-const app = express();
-const port = 3000;
+const app = express(); // Inicializa a aplicação
+const port = 3000; // Define a porta onde o servidor vai rodar
 
-//Configurar EJS como template engine
+//Configurar EJS como template engine (permite usar HTML com JS)
 app.set('view engine', 'ejs');
 
-//Servir arquivos estáticos da pasta 'public'
+// Define a pasta 'public' para servir arquivos estáticos (CSS, imagens, etc.)
 app.use(express.static('public'));
 
-//Rota principal (Home)
+// Rota principal (Home) -> renderiza a página index.ejs
 app.get('/', (req, res) => {
     res.render('index', { title: 'Minha Aplicação Express'});
 });
 
-//Outras Rotas
+// Rota /sobre -> renderiza sobre.ejs
 app.get('/sobre', (req, res) => {
     res.render('sobre', { title: 'Sobre Nós'});
 });
 
-//Rota para "Serviços"
+// Rota /servicos -> renderiza servicos.ejs
 app.get('/servicos', (req, res) => {
     res.render('servicos', { title: 'Serviços' });
 });
 
-//Rota para "Contato"
+// Rota /contato -> renderiza contato.ejs
 app.get('/contato', (req, res) => {
     res.render('contato', { title: 'Contato' });
 });
 
-//Iniciar o Servidor
+// Inicia o servidor e mostra a mensagem no terminal
 app.listen(port, () => {
     console.log('Servidor rodando em http://localhost:${port}');
 });
