@@ -18,17 +18,23 @@ Foram feitos **dois projetos**:
 ## Como executar
 
 ### Projeto 1 — Manual (Node.js e EJS)
+Abra o terminal dentro da pasta do projeto
 ```bash
-cd 1-manual
+# 1. Instala as dependências necessárias (Express e EJS)
 npm install
-node app.
+
+# 2. Inicia o servidor manualmente
+node app.js
 ```
 Acesse em: http://localhost:3000
 
-### Projeto 1 — Express Generator
+### Projeto 2 — Express Generator
+Abra o terminal dentro da pasta do projeto gerado
 ```bash
-cd 2-generator
+# 1. Instala as dependências listadas no package.json
 npm install
+
+# 2. Inicia o servidor com o script padrão
 npm start
 ```
 Acesse em: http://localhost:3000
