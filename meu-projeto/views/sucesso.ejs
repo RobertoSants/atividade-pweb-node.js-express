@@ -10,16 +10,44 @@
   <h1>✅ <%= title %></h1>
   <p>Recebemos seus dados. Obrigado pelo contato!</p>
 
-  <h2>Resumo dos dados enviados:</h2>
+  <h2>Resumo</h2>
   <ul>
+    <!-- Exibe os dados principais -->
     <li><strong>Nome:</strong> <%= data.nome %></li>
     <li><strong>E-mail:</strong> <%= data.email %></li>
-    <% if (data.idade) { %><li><strong>Idade:</strong> <%= data.idade %></li><% } %>
-    <% if (data.genero) { %><li><strong>Gênero:</strong> <%= data.genero %></li><% } %>
+
+    <% if (data.idade) { %>
+      <li><strong>Idade:</strong> <%= data.idade %></li>
+    <% } %>
+
+    <% if (data.genero) { %>
+      <li><strong>Gênero:</strong> <%= data.genero %></li>
+    <% } %>
+
     <% if (Array.isArray(data.interesses) && data.interesses.length) { %>
       <li><strong>Interesses:</strong> <%= data.interesses.join(', ') %></li>
     <% } %>
+
     <li><strong>Mensagem:</strong> <%= data.mensagem %></li>
+
+    <!--Novos campos de validação (Passo 16)-->
+
+    <% if (data.pontuacao) { %>
+      <li><strong>Pontuação:</strong> <%= data.pontuacao %></li>
+    <% } %>
+
+    <% if (data.codigo) { %>
+      <li><strong>Código:</strong> <%= data.codigo %></li>
+    <% } %>
+
+    <% if (data.senha) { %>
+      <!--Sei que não é o ideal mostrar a senha em sistemas reais, mas aqui é apenas um exemplo didático -->
+      <li><strong>Senha:</strong> (oculta por segurança)</li>
+    <% } %>
+
+    <% if (data.comentario) { %>
+      <li><strong>Comentário:</strong> <%= data.comentario %></li>
+    <% } %>
   </ul>
 
   <p><a href="/contato">Enviar outro</a> | <a href="/">Voltar à Home</a></p>
