@@ -89,6 +89,34 @@
       <% if (errors.aceite) { %><div class="error"><%= errors.aceite.msg %></div><% } %>
     </div>
 
+    <!-- Pontuação -->
+    <div class="field">
+        <label for="pontuacao">Pontuação (0 a 100)</label>
+        <input id="pontuacao" name="pontuacao" type="number" value="<%= data.pontuacao || '' %>">
+        <% if (errors.pontuacao) { %><div class="error"><%= errors.pontuacao.msg %></div><% } %>
+    </div>
+
+    <!-- Código -->
+    <div class="field">
+        <label for="codigo">Código</label>
+        <input id="codigo" name="codigo" type="text" maxlength="6" value="<%= data.codigo || '' %>">
+        <% if (errors.codigo) { %><div class="error"><%= errors.codigo.msg %></div><% } %>
+    </div>
+
+    <!-- Senha -->
+    <div class="field">
+        <label for="senha">Senha</label>
+        <input id="senha" name="senha" type="password" minlength="8" maxlength="64">
+        <% if (errors.senha) { %><div class="error"><%= errors.senha.msg %></div><% } %>
+    </div>
+
+    <!-- Comentário -->
+    <div class="field">
+        <label for="comentario">Comentário</label>
+        <textarea id="comentario" name="comentario" rows="3"><%= data.comentario || '' %></textarea>
+        <% if (errors.comentario) { %><div class="error"><%= errors.comentario.msg %></div><% } %>
+    </div>
+
     <button type="submit">Enviar</button>
   </form>
 </body>
