@@ -3,7 +3,9 @@ var createError = require('http-errors'); // cria mensagens de erro HTTP (ex: 40
 var express = require('express'); // principal framework para servidor Node.js
 var path = require('path'); // ajuda a lidar com caminhos de arquivos
 var cookieParser = require('cookie-parser'); // permite ler cookies (dados salvos no navegador)
+const csrf = require('csurf');
 var logger = require('morgan'); // exibe logs das requisições no terminal
+const helmet = require('helmet');
 
 // Importa os arquivos de rotas (cada um é responsável por uma parte do site)
 var indexRouter = require('./routes/index'); // rota da página inicial
@@ -25,7 +27,17 @@ app.use(logger('dev')); // mostra no terminal o tipo de requisição (GET, POST,
 app.use(express.json()); // permite ler dados JSON no corpo das requisições
 app.use(express.urlencoded({ extended: false })); // permite ler dados de formulários
 app.use(cookieParser()); // habilita uso de cookies
+app.use(csrf({ cookie: true })); // Habilita proteção CSRF (gera tokens e bloqueia envios falsos)
 app.use(express.static(path.join(__dirname, 'public'))); // define a pasta "public" para arquivos estáticos (CSS, imagens, etc.)
+
+// Middleware para adicionar o token CSRF a todas as renderizações de view
+app.use(function (req, res, next) {
+  res.locals.csrfToken = req.csrfToken();
+  next();
+});
+
+// Middleware de segurança HTTP — adiciona headers seguros
+app.use(helmet());
 
 // ROTAS DO SISTEMA
 app.use('/', indexRouter); // rota raiz (ex: http://localhost:3000/)

@@ -6,16 +6,65 @@
   <title><%= title %></title>
   <link rel="stylesheet" href="/stylesheets/style.css">
 
-  <!-- Estilos adicionais para o formulário -->
+  <!-- Estilos adicionais -->
   <style>
-    .error { color: #b00020; font-size: 0.95em; margin-top: 4px; }
-    .field { margin-bottom: 1rem; }
-    .field input, .field select, .field textarea {
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2rem;
+      line-height: 1.5;
+    }
+
+    h1 {
+      color: #2c3e50;
+      margin-bottom: 1.5rem;
+    }
+
+    form {
+      max-width: 600px;
+    }
+
+    .field {
+      margin-bottom: 1.2rem;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
       width: 100%;
       max-width: 500px;
       padding: 8px;
       border: 1px solid #ccc;
-      border-radius: 4px;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+    .error {
+      color: #b00020;
+      font-size: 0.95em;
+      margin-top: 4px;
+    }
+
+    button {
+      background-color: #2c7a7b;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #285e61;
+    }
+
+    fieldset {
+      border: 1px solid #ccc;
+      padding: 1rem;
+      border-radius: 5px;
+    }
+
+    legend {
+      font-weight: bold;
     }
   </style>
 </head>
@@ -24,25 +73,36 @@
 
   <!-- Formulário principal -->
   <form method="post" action="/contato" novalidate>
-    
+    <!-- Token de segurança CSRF -->
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
     <!-- Campo Nome -->
     <div class="field">
       <label for="nome">Nome*</label>
-      <input id="nome" name="nome" type="text" value="<%= data.nome || '' %>">
+      <input id="nome" name="nome" type="text"
+        required minlength="3" maxlength="60"
+        pattern="[A-Za-zÀ-ÖØ-öø-ÿ' -]+"
+        title="Use apenas letras, espaços, apóstrofo e hífen."
+        value="<%= data.nome || '' %>">
       <% if (errors.nome) { %><div class="error"><%= errors.nome.msg %></div><% } %>
     </div>
 
     <!-- Campo E-mail -->
     <div class="field">
       <label for="email">E-mail*</label>
-      <input id="email" name="email" type="email" value="<%= data.email || '' %>">
+      <input id="email" name="email" type="email"
+        required title="Digite um e-mail válido."
+        value="<%= data.email || '' %>">
       <% if (errors.email) { %><div class="error"><%= errors.email.msg %></div><% } %>
     </div>
 
     <!-- Campo Idade -->
     <div class="field">
       <label for="idade">Idade (opcional)</label>
-      <input id="idade" name="idade" type="number" value="<%= data.idade || '' %>">
+      <input id="idade" name="idade" type="number"
+        min="1" max="120"
+        title="Se informado, deve estar entre 1 e 120."
+        value="<%= data.idade || '' %>">
       <% if (errors.idade) { %><div class="error"><%= errors.idade.msg %></div><% } %>
     </div>
 
@@ -76,14 +136,17 @@
     <!-- Mensagem -->
     <div class="field">
       <label for="mensagem">Mensagem*</label>
-      <textarea id="mensagem" name="mensagem" rows="5"><%= data.mensagem || '' %></textarea>
+      <textarea id="mensagem" name="mensagem" rows="5"
+        required minlength="10" maxlength="500"
+        title="A mensagem deve ter entre 10 e 500 caracteres."><%= data.mensagem || '' %></textarea>
       <% if (errors.mensagem) { %><div class="error"><%= errors.mensagem.msg %></div><% } %>
     </div>
 
     <!-- Checkbox dos termos -->
     <div class="field">
       <label>
-        <input type="checkbox" name="aceite" <%= data.aceite ? 'checked' : '' %>>
+        <input type="checkbox" name="aceite"
+          required <%= data.aceite ? 'checked' : '' %>>
         Concordo com os termos de uso*
       </label>
       <% if (errors.aceite) { %><div class="error"><%= errors.aceite.msg %></div><% } %>
@@ -91,33 +154,54 @@
 
     <!-- Pontuação -->
     <div class="field">
-        <label for="pontuacao">Pontuação (0 a 100)</label>
-        <input id="pontuacao" name="pontuacao" type="number" value="<%= data.pontuacao || '' %>">
-        <% if (errors.pontuacao) { %><div class="error"><%= errors.pontuacao.msg %></div><% } %>
+      <label for="pontuacao">Pontuação (0 a 100)</label>
+      <input id="pontuacao" name="pontuacao" type="number"
+        min="0" max="100"
+        title="Informe um valor entre 0 e 100."
+        value="<%= data.pontuacao || '' %>">
+      <% if (errors.pontuacao) { %><div class="error"><%= errors.pontuacao.msg %></div><% } %>
     </div>
 
     <!-- Código -->
     <div class="field">
-        <label for="codigo">Código</label>
-        <input id="codigo" name="codigo" type="text" maxlength="6" value="<%= data.codigo || '' %>">
-        <% if (errors.codigo) { %><div class="error"><%= errors.codigo.msg %></div><% } %>
+      <label for="codigo">Código</label>
+      <input id="codigo" name="codigo" type="text"
+        maxlength="6" pattern="[A-Za-z0-9]{6}"
+        title="Código deve conter exatamente 6 caracteres alfanuméricos."
+        value="<%= data.codigo || '' %>">
+      <% if (errors.codigo) { %><div class="error"><%= errors.codigo.msg %></div><% } %>
     </div>
 
     <!-- Senha -->
     <div class="field">
-        <label for="senha">Senha</label>
-        <input id="senha" name="senha" type="password" minlength="8" maxlength="64">
-        <% if (errors.senha) { %><div class="error"><%= errors.senha.msg %></div><% } %>
+      <label for="senha">Senha</label>
+      <input id="senha" name="senha" type="password"
+        minlength="8" maxlength="64"
+        title="A senha deve ter entre 8 e 64 caracteres.">
+      <% if (errors.senha) { %><div class="error"><%= errors.senha.msg %></div><% } %>
     </div>
 
     <!-- Comentário -->
     <div class="field">
-        <label for="comentario">Comentário</label>
-        <textarea id="comentario" name="comentario" rows="3"><%= data.comentario || '' %></textarea>
-        <% if (errors.comentario) { %><div class="error"><%= errors.comentario.msg %></div><% } %>
+      <label for="comentario">Comentário</label>
+      <textarea id="comentario" name="comentario" rows="3"
+        maxlength="300"
+        title="Evite caracteres especiais perigosos."><%= data.comentario || '' %></textarea>
+      <% if (errors.comentario) { %><div class="error"><%= errors.comentario.msg %></div><% } %>
     </div>
 
     <button type="submit">Enviar</button>
   </form>
+
+  <!-- Script de UX: foca automaticamente no primeiro erro -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const firstError = document.querySelector(".error");
+      if (firstError) {
+        const input = firstError.closest(".field")?.querySelector("input, textarea, select");
+        if (input) input.focus();
+      }
+    });
+  </script>
 </body>
 </html>
