@@ -6,14 +6,26 @@
 
 ## Sobre o projeto
 
-Este repositório faz parte da disciplina **Programação Web (PWEB)**.  
-O objetivo foi aprender a criar uma aplicação **Node.js com Express e EJS**, seguindo os tutoriais do professor Leo Fernandes.
+Este repositório faz parte da disciplina **Programação Web (PWEB)** do IFAL.  
+O objetivo foi aprender a criar aplicações **Node.js com Express e EJS**, evoluindo do básico até o uso de **formulários com validação, segurança e páginas dinâmicas**.
 
-Foram feitos **dois projetos**:
-1. Um criado **manualmente**, com Express e EJS.
-2. Outro usando o **Express Generator**, que monta a estrutura automaticamente.
+Foram desenvolvidos **dois projetos**:
+1. **Manual** – Criado passo a passo com Express e EJS.  
+2. **Com Express Generator** – Estrutura automática com melhorias, rotas e validações.
 
 ---
+
+## Funcionalidades
+
+- Rotas com Express
+- Templates dinâmicos com EJS
+- Formulário validado no backend com express-validator
+- Proteção CSRF com csurf
+- Segurança HTTP com helmet
+- Estilização simples com CSS
+- Navegação entre páginas (Início, Sobre, Formulário, Cadastro)
+- Feedback visual de erros e campos preenchidos
+- Exibição de dados enviados em uma página de sucesso 
 
 ## Como executar
 
@@ -38,3 +50,13 @@ npm install
 npm start
 ```
 Acesse em: http://localhost:3000
+
+## Tecnologias utilizadas
+
+- Node.js
+- Express.js
+- EJS
+- Express-validator
+- Csurf
+- Helmet
+- HTML5 e CSS3
