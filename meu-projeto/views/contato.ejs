@@ -1,35 +1,95 @@
-<% include partials/header %>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
 
-<main>
+  <!-- Estilos adicionais para o formulário -->
+  <style>
+    .error { color: #b00020; font-size: 0.95em; margin-top: 4px; }
+    .field { margin-bottom: 1rem; }
+    .field input, .field select, .field textarea {
+      width: 100%;
+      max-width: 500px;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
   <h1><%= title %></h1>
 
-  <!-- Exibir mensagens de sucesso -->
-  <% if (success) { %>
-    <p style="color: green;"><%= success %></p>
-  <% } %>
+  <!-- Formulário principal -->
+  <form method="post" action="/contato" novalidate>
+    
+    <!-- Campo Nome -->
+    <div class="field">
+      <label for="nome">Nome*</label>
+      <input id="nome" name="nome" type="text" value="<%= data.nome || '' %>">
+      <% if (errors.nome) { %><div class="error"><%= errors.nome.msg %></div><% } %>
+    </div>
 
-  <!-- Exibir erros de validação -->
-  <% if (errors) { %>
-    <ul style="color: red;">
-      <% errors.forEach(function(error) { %>
-        <li><%= error.msg %></li>
+    <!-- Campo E-mail -->
+    <div class="field">
+      <label for="email">E-mail*</label>
+      <input id="email" name="email" type="email" value="<%= data.email || '' %>">
+      <% if (errors.email) { %><div class="error"><%= errors.email.msg %></div><% } %>
+    </div>
+
+    <!-- Campo Idade -->
+    <div class="field">
+      <label for="idade">Idade (opcional)</label>
+      <input id="idade" name="idade" type="number" value="<%= data.idade || '' %>">
+      <% if (errors.idade) { %><div class="error"><%= errors.idade.msg %></div><% } %>
+    </div>
+
+    <!-- Campo Gênero -->
+    <div class="field">
+      <label for="genero">Gênero</label>
+      <select id="genero" name="genero">
+        <option value="" <%= data.genero === '' ? 'selected' : '' %>>Selecione...</option>
+        <option value="feminino" <%= data.genero === 'feminino' ? 'selected' : '' %>>Feminino</option>
+        <option value="masculino" <%= data.genero === 'masculino' ? 'selected' : '' %>>Masculino</option>
+        <option value="nao-binario" <%= data.genero === 'nao-binario' ? 'selected' : '' %>>Não-binário</option>
+        <option value="prefiro-nao-informar" <%= data.genero === 'prefiro-nao-informar' ? 'selected' : '' %>>Prefiro não informar</option>
+      </select>
+      <% if (errors.genero) { %><div class="error"><%= errors.genero.msg %></div><% } %>
+    </div>
+
+    <!-- Interesses (Checkboxes) -->
+    <fieldset class="field">
+      <legend>Interesses</legend>
+      <% const all = ['node','express','ejs','frontend','backend']; %>
+      <% all.forEach(opt => { %>
+        <label>
+          <input type="checkbox" name="interesses" value="<%= opt %>"
+            <%= (Array.isArray(data.interesses) && data.interesses.includes(opt)) ? 'checked' : '' %>>
+          <%= opt.toUpperCase() %>
+        </label><br>
       <% }) %>
-    </ul>
-  <% } %>
+      <% if (errors.interesses) { %><div class="error"><%= errors.interesses.msg %></div><% } %>
+    </fieldset>
 
-  <!-- Formulário -->
-  <form action="/contato" method="POST">
-    <label>Nome:</label><br>
-    <input type="text" name="nome"><br><br>
+    <!-- Mensagem -->
+    <div class="field">
+      <label for="mensagem">Mensagem*</label>
+      <textarea id="mensagem" name="mensagem" rows="5"><%= data.mensagem || '' %></textarea>
+      <% if (errors.mensagem) { %><div class="error"><%= errors.mensagem.msg %></div><% } %>
+    </div>
 
-    <label>E-mail:</label><br>
-    <input type="email" name="email"><br><br>
-
-    <label>Mensagem:</label><br>
-    <textarea name="mensagem"></textarea><br><br>
+    <!-- Checkbox dos termos -->
+    <div class="field">
+      <label>
+        <input type="checkbox" name="aceite" <%= data.aceite ? 'checked' : '' %>>
+        Concordo com os termos de uso*
+      </label>
+      <% if (errors.aceite) { %><div class="error"><%= errors.aceite.msg %></div><% } %>
+    </div>
 
     <button type="submit">Enviar</button>
   </form>
-</main>
-
-<% include partials/footer %>
+</body>
+</html>
