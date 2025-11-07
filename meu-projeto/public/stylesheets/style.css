@@ -1,8 +1,51 @@
+/* ===== ESTILO GERAL DA PÁGINA ===== */
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif; /* Define a fonte padrão */
+  background-color: #f4f6f8; /* Cor de fundo leve */
+  color: #333; /* Cor principal do texto */
+  margin: 0;
+  padding: 0;
+  text-align: center; /* Centraliza o conteúdo */
 }
 
-a {
-  color: #00B7FF;
+/* ===== MENU DE NAVEGAÇÃO ===== */
+nav {
+  background-color: #1565c0; /* Azul principal */
+  padding: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra discreta */
+}
+
+nav a {
+  color: white; /* Cor dos links no menu */
+  text-decoration: none; /* Remove sublinhado */
+  margin: 0 15px; /* Espaço entre links */
+  font-weight: bold;
+}
+
+nav a:hover {
+  text-decoration: underline; /* Destaque ao passar o mouse */
+}
+
+/* ===== CONTEÚDO PRINCIPAL ===== */
+main {
+  padding: 40px 20px;
+}
+
+h1 {
+  color: #0d47a1; /* Azul escuro para destaque */
+}
+
+p {
+  font-size: 16px;
+  color: #444;
+}
+
+/* ===== RODAPÉ ===== */
+footer {
+  background-color: #e3f2fd; /* Azul bem claro */
+  color: #555;
+  padding: 15px;
+  font-size: 14px;
+  border-top: 1px solid #ccc;
+  margin-top: 40px;
 }

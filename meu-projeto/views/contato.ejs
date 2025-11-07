@@ -1,0 +1,35 @@
+<% include partials/header %>
+
+<main>
+  <h1><%= title %></h1>
+
+  <!-- Exibir mensagens de sucesso -->
+  <% if (success) { %>
+    <p style="color: green;"><%= success %></p>
+  <% } %>
+
+  <!-- Exibir erros de validação -->
+  <% if (errors) { %>
+    <ul style="color: red;">
+      <% errors.forEach(function(error) { %>
+        <li><%= error.msg %></li>
+      <% }) %>
+    </ul>
+  <% } %>
+
+  <!-- Formulário -->
+  <form action="/contato" method="POST">
+    <label>Nome:</label><br>
+    <input type="text" name="nome"><br><br>
+
+    <label>E-mail:</label><br>
+    <input type="email" name="email"><br><br>
+
+    <label>Mensagem:</label><br>
+    <textarea name="mensagem"></textarea><br><br>
+
+    <button type="submit">Enviar</button>
+  </form>
+</main>
+
+<% include partials/footer %>

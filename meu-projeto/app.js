@@ -1,43 +1,55 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+// Importa as bibliotecas necessárias para o funcionamento do servidor
+var createError = require('http-errors'); // cria mensagens de erro HTTP (ex: 404, 500)
+var express = require('express'); // principal framework para servidor Node.js
+var path = require('path'); // ajuda a lidar com caminhos de arquivos
+var cookieParser = require('cookie-parser'); // permite ler cookies (dados salvos no navegador)
+var logger = require('morgan'); // exibe logs das requisições no terminal
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var aboutRouter = require('./routes/about');
+// Importa os arquivos de rotas (cada um é responsável por uma parte do site)
+var indexRouter = require('./routes/index'); // rota da página inicial
+var usersRouter = require('./routes/users'); // rota de exemplo gerada automaticamente
+var aboutRouter = require('./routes/about'); // rota personalizada
+var contatoRouter = require('./routes/contato'); // rota de formulário
 
+// Inicializa a aplicação Express
 var app = express();
 
-// view engine setup
+// CONFIGURAÇÕES GERAIS
+
+// Define o mecanismo de templates (EJS) e o diretório das views
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+// Middlewares (funções executadas em toda requisição)
+app.use(logger('dev')); // mostra no terminal o tipo de requisição (GET, POST, etc.)
+app.use(express.json()); // permite ler dados JSON no corpo das requisições
+app.use(express.urlencoded({ extended: false })); // permite ler dados de formulários
+app.use(cookieParser()); // habilita uso de cookies
+app.use(express.static(path.join(__dirname, 'public'))); // define a pasta "public" para arquivos estáticos (CSS, imagens, etc.)
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use ('/about', aboutRouter);
+// ROTAS DO SISTEMA
+app.use('/', indexRouter); // rota raiz (ex: http://localhost:3000/)
+app.use('/users', usersRouter); // rota padrão do Generator
+app.use('/about', aboutRouter); // nova rota personalizada
+app.use('/contato', contatoRouter); // nova rota para formulario
 
-// catch 404 and forward to error handler
+// TRATAMENTO DE ERROS
+
+// Se nenhuma rota for encontrada, gera erro 404 e envia ao handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
 
-// error handler
+// Handler de erros gerais
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
+  // Define mensagem e status do erro
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
+  // Renderiza a página de erro (views/error.ejs)
   res.status(err.status || 500);
   res.render('error');
 });
 
+// Exporta a aplicação para ser usada pelo arquivo bin/www
 module.exports = app;
