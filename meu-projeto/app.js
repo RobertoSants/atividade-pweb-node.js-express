@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser'); // permite ler cookies (dados salvo
 const csrf = require('csurf');
 var logger = require('morgan'); // exibe logs das requisições no terminal
 const helmet = require('helmet');
+const cadastroRouter = require('./routes/cadastro');
 
 // Importa os arquivos de rotas (cada um é responsável por uma parte do site)
 var indexRouter = require('./routes/index'); // rota da página inicial
@@ -44,6 +45,7 @@ app.use('/', indexRouter); // rota raiz (ex: http://localhost:3000/)
 app.use('/users', usersRouter); // rota padrão do Generator
 app.use('/about', aboutRouter); // nova rota personalizada
 app.use('/contato', contatoRouter); // nova rota para formulario
+app.use('/cadastro', cadastroRouter); // nova rota para cadastro
 
 // TRATAMENTO DE ERROS
 
