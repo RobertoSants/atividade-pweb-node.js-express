@@ -13,6 +13,7 @@ var indexRouter = require('./routes/index'); // rota da página inicial
 var usersRouter = require('./routes/users'); // rota de exemplo gerada automaticamente
 var aboutRouter = require('./routes/about'); // rota personalizada
 var contatoRouter = require('./routes/contato'); // rota de formulário
+var listaRouter = require('./routes/lista'); // rota de listagem
 
 // Inicializa a aplicação Express
 var app = express();
@@ -46,6 +47,7 @@ app.use('/users', usersRouter); // rota padrão do Generator
 app.use('/about', aboutRouter); // nova rota personalizada
 app.use('/contato', contatoRouter); // nova rota para formulario
 app.use('/cadastro', cadastroRouter); // nova rota para cadastro
+app.use('/lista', listaRouter); // nova rota de listagem
 
 // TRATAMENTO DE ERROS
 

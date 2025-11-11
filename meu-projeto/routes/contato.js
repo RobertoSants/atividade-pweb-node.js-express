@@ -5,6 +5,10 @@ var router = express.Router();
 // Importa funções de validação e verificação do express-validator
 const { body, validationResult } = require('express-validator');
 
+// Importa o módulo de banco de dados (SQLite)
+// Este arquivo 'db.js' está na raiz do projeto e cria/gerencia a base 'contatos.db'
+const db = require('../db');
+
 /**
  * GET /contato – Exibe o formulário de contato
  * Renderiza o template "contato.ejs" com objetos vazios para evitar erros na primeira carga.
@@ -124,13 +128,58 @@ router.post('/',
       });
     }
 
-    // Caso os dados sejam válidos, renderiza a página de sucesso
+    /**
+     * SUCESSO: SALVAR NO BANCO DE DADOS
+     * Aqui ocorre a integração real com o banco SQLite.
+     * Os dados validados são inseridos na tabela "contatos"
+     * usando uma instrução SQL preparada (segura contra injeções).
+     */
+
+    const stmt = db.prepare(`
+      INSERT INTO contatos (nome, email, idade, genero, interesses, mensagem, aceite)
+      VALUES (@nome, @email, @idade, @genero, @interesses, @mensagem, @aceite)
+    `);
+
+    // Executa o comando SQL substituindo os parâmetros pelos valores do formulário
+    stmt.run({
+      nome: data.nome,
+      email: data.email,
+      idade: data.idade || null,
+      genero: data.genero || null,
+      interesses: Array.isArray(data.interesses)
+        ? data.interesses.join(',') // transforma array de interesses em texto (ex: "node,express")
+        : (data.interesses || ''),
+      mensagem: data.mensagem,
+      aceite: data.aceite ? 1 : 0 // converte booleano em número (1=aceitou, 0=não)
+    });
+
+    // Após inserir os dados, renderiza a página de sucesso normalmente
     return res.render('sucesso', {
       title: 'Enviado com sucesso',
       data
     });
   }
 );
+
+/**
+ * GET /contato/lista – Lista de contatos cadastrados
+ * Esta rota exibe todos os contatos salvos no banco SQLite.
+ * É usada apenas para visualização e consulta.
+ */
+router.get('/lista', (req, res) => {
+  // Consulta todos os registros da tabela contatos
+  const rows = db.prepare(`
+    SELECT id, nome, email, idade, genero, interesses, mensagem, criado_em
+    FROM contatos
+    ORDER BY criado_em DESC
+  `).all();
+
+  // Renderiza a página 'contatos-lista.ejs' passando os dados obtidos
+  res.render('contatos-lista', {
+    title: 'Lista de Contatos',
+    contatos: rows
+  });
+});
 
 // Exporta o roteador para ser usado no app.js
 module.exports = router;

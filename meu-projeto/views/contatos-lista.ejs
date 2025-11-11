@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+  <h1><%= title %></h1>
+
+  <!-- Link para voltar ao formulário -->
+  <p><a href="/contato">← Voltar ao formulário</a></p>
+
+
+  <!-- Se houver contatos cadastrados -->
+  <% if (contatos.length > 0) { %>
+    <table border="1" cellpadding="8" cellspacing="0">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>E-mail</th>
+          <th>Idade</th>
+          <th>Gênero</th>
+          <th>Interesses</th>
+          <th>Mensagem</th>
+          <th>Data</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% contatos.forEach(c => { %>
+          <tr>
+            <td><%= c.id %></td>
+            <td><%= c.nome %></td>
+            <td><%= c.email %></td>
+            <td><%= c.idade || '-' %></td>
+            <td><%= c.genero || '-' %></td>
+            <td><%= c.interesses || '-' %></td>
+            <td><%= c.mensagem %></td>
+            <td><%= new Date(c.criado_em).toLocaleString('pt-BR') %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } else { %>
+    <!-- Caso o banco esteja vazio -->
+    <p>Nenhum contato cadastrado ainda.</p>
+  <% } %>
+</body>
+</html>
