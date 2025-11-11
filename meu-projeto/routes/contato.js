@@ -1,4 +1,4 @@
-// Importa os módulos necessários
+// Importa os módulos necessários 
 var express = require('express');
 var router = express.Router();
 
@@ -134,7 +134,6 @@ router.post('/',
      * Os dados validados são inseridos na tabela "contatos"
      * usando uma instrução SQL preparada (segura contra injeções).
      */
-
     const stmt = db.prepare(`
       INSERT INTO contatos (nome, email, idade, genero, interesses, mensagem, aceite)
       VALUES (@nome, @email, @idade, @genero, @interesses, @mensagem, @aceite)
@@ -181,5 +180,31 @@ router.get('/lista', (req, res) => {
   });
 });
 
-// Exporta o roteador para ser usado no app.js
+/**
+ * POST /contato/:id/delete – Exclui um contato específico pelo ID
+ * ---------------------------------------------------------------
+ * 📘 Didático: Usamos POST (e não GET) para seguir boas práticas REST e de segurança.
+ * O ideal seria o método HTTP DELETE, mas aqui simplificamos o fluxo.
+ */
+router.post('/:id/delete', (req, res) => {
+  // Captura o ID da URL e converte para número inteiro
+  const id = parseInt(req.params.id, 10);
+
+  // Verifica se o ID é válido
+  if (Number.isNaN(id)) {
+    // Caso o ID seja inválido, apenas redireciona de volta à lista
+    return res.redirect('/contato/lista');
+  }
+
+  // Executa o comando SQL DELETE no registro correspondente
+  const info = db.prepare('DELETE FROM contatos WHERE id = ?').run(id);
+
+  // (Opcional) Teste: você pode verificar se algum registro foi realmente apagado
+  // if (info.changes === 0) console.log('Nenhum registro com esse ID');
+
+  // Após exclusão, redireciona novamente para a lista de contatos
+  return res.redirect('/contato/lista');
+});
+
+// Exporta para ser usado no app.js
 module.exports = router;
