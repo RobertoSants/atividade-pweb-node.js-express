@@ -5,13 +5,34 @@
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
+
+  <!-- Inclui o cabeçalho padrão da aplicação (definido em partials/header.ejs) -->
   <% include partials/header %>
+
   <body>
+    <!-- Título principal da página -->
     <h1>Bem-vindo ao Express com EJS!</h1>
+
+    <!-- Breve descrição da aplicação -->
     <p>Esta é uma aplicação gerada com o Express Generator.</p>
 
-    <!-- Link simples para a página Sobre -->
+    <!-- Link simples para a página "Sobre Nós" -->
     <p><a href="/about">Ir para a página Sobre Nós</a></p>
+
+    <!-- Explicação breve sobre a funcionalidade -->
+    <p>Exemplo de formulário + banco de dados (SQLite).</p>
+
+    <!-- Lista de navegação com os principais fluxos do sistema -->
+    <ul>
+      <!-- Link para acessar o formulário de contato -->
+      <li><a href="/contato">Cadastrar novo contato</a></li>
+
+      <!-- Link para listar todos os contatos cadastrados -->
+      <li><a href="/contato/lista">Listar contatos cadastrados</a></li>
+    </ul>
+
   </body>
+
+  <!-- Inclui o rodapé padrão da aplicação (definido em partials/footer.ejs) -->
   <% include partials/footer %>
 </html>
