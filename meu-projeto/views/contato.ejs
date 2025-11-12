@@ -6,7 +6,7 @@
   <title><%= title %></title>
   <link rel="stylesheet" href="/stylesheets/style.css">
 
-  <!-- Estilos adicionais -->
+  <!-- Estilos visuais básicos -->
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -73,7 +73,7 @@
 
   <!-- Formulário principal -->
   <form method="post" action="/contato" novalidate>
-    <!-- Token de segurança CSRF -->
+    <!-- Token CSRF obrigatório -->
     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
 
     <!-- Campo Nome -->
@@ -94,6 +94,16 @@
         required title="Digite um e-mail válido."
         value="<%= data.email || '' %>">
       <% if (errors.email) { %><div class="error"><%= errors.email.msg %></div><% } %>
+    </div>
+
+    <!-- Campo Telefone -->
+    <div class="field">
+      <label for="telefone">Telefone (opcional)</label>
+      <input id="telefone" name="telefone" type="tel"
+        pattern="\d{10,11}"
+        title="Informe apenas números (DDD + número, ex: 82999999999)."
+        value="<%= data.telefone || '' %>">
+      <% if (errors.telefone) { %><div class="error"><%= errors.telefone.msg %></div><% } %>
     </div>
 
     <!-- Campo Idade -->
@@ -119,7 +129,7 @@
       <% if (errors.genero) { %><div class="error"><%= errors.genero.msg %></div><% } %>
     </div>
 
-    <!-- Interesses (Checkboxes) -->
+    <!-- Interesses -->
     <fieldset class="field">
       <legend>Interesses</legend>
       <% const all = ['node','express','ejs','frontend','backend']; %>
@@ -152,27 +162,7 @@
       <% if (errors.aceite) { %><div class="error"><%= errors.aceite.msg %></div><% } %>
     </div>
 
-    <!-- Pontuação -->
-    <div class="field">
-      <label for="pontuacao">Pontuação (0 a 100)</label>
-      <input id="pontuacao" name="pontuacao" type="number"
-        min="0" max="100"
-        title="Informe um valor entre 0 e 100."
-        value="<%= data.pontuacao || '' %>">
-      <% if (errors.pontuacao) { %><div class="error"><%= errors.pontuacao.msg %></div><% } %>
-    </div>
-
-    <!-- Código -->
-    <div class="field">
-      <label for="codigo">Código</label>
-      <input id="codigo" name="codigo" type="text"
-        maxlength="6" pattern="[A-Za-z0-9]{6}"
-        title="Código deve conter exatamente 6 caracteres alfanuméricos."
-        value="<%= data.codigo || '' %>">
-      <% if (errors.codigo) { %><div class="error"><%= errors.codigo.msg %></div><% } %>
-    </div>
-
-    <!-- Senha -->
+    <!-- Campo Senha (mantido apenas como exemplo didático) -->
     <div class="field">
       <label for="senha">Senha</label>
       <input id="senha" name="senha" type="password"
@@ -181,19 +171,11 @@
       <% if (errors.senha) { %><div class="error"><%= errors.senha.msg %></div><% } %>
     </div>
 
-    <!-- Comentário -->
-    <div class="field">
-      <label for="comentario">Comentário</label>
-      <textarea id="comentario" name="comentario" rows="3"
-        maxlength="300"
-        title="Evite caracteres especiais perigosos."><%= data.comentario || '' %></textarea>
-      <% if (errors.comentario) { %><div class="error"><%= errors.comentario.msg %></div><% } %>
-    </div>
-
+    <!-- Botão principal -->
     <button type="submit">Enviar</button>
   </form>
 
-  <!-- Script de UX: foca automaticamente no primeiro erro -->
+  <!-- Foco automático no primeiro erro -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const firstError = document.querySelector(".error");

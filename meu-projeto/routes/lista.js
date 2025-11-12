@@ -35,5 +35,4 @@ router.get('/', (req, res) => {
   }
 });
 
-// Exporta o roteador
 module.exports = router;
