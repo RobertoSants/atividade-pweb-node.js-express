@@ -26,6 +26,9 @@ Foram desenvolvidos **dois projetos**:
 - Navegação entre páginas (Início, Sobre, Formulário, Cadastro)
 - Feedback visual de erros e campos preenchidos
 - Exibição de dados enviados em uma página de sucesso 
+- Integração com banco de dados SQLite
+- Listagem de contatos cadastrados (`/contato/lista`)
+- Botão de exclusão de contatos com confirmação de segurança
 
 ## Como executar
 
@@ -59,4 +62,5 @@ Acesse em: http://localhost:3000
 - Express-validator
 - Csurf
 - Helmet
+- SQLite3
 - HTML5 e CSS3
