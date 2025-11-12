@@ -101,16 +101,15 @@
                 Assim, cada linha da tabela tem seu próprio botão que dispara
                 a exclusão daquele contato específico.
 
-                O atributo "onsubmit" chama uma confirmação JavaScript simples
-                para evitar exclusões acidentais.
+                Em vez de usar onsubmit direto no HTML, agora usamos
+                JavaScript separado (no final da página) para aplicar a confirmação.
               -->
-              <form action="/contato/<%= c.id %>/delete" method="post"
-                    onsubmit="return confirm('Tem certeza que deseja excluir o contato <%= c.nome %>?');">
-
+              <form class="form-delete" action="/contato/<%= c.id %>/delete" method="post">
                 <!-- Campo oculto com o token CSRF obrigatório -->
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                 
-                <button type="submit">Excluir</button>
+                <!-- O botão contém o nome do contato como atributo data -->
+                <button type="submit" data-nome="<%= c.nome %>">Excluir</button>
               </form>
             </td>
           </tr>
@@ -118,5 +117,32 @@
       </tbody>
     </table>
   <% } %>
+
+  <!--
+    Script de confirmação centralizado
+    ---------------------------------
+    Este script adiciona dinamicamente a confirmação de exclusão a todos
+    os formulários com a classe "form-delete". Isso evita problemas de
+    interpretação do EJS e funciona mesmo com Helmet ativo.
+  -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Seleciona todos os formulários de exclusão
+      const forms = document.querySelectorAll('.form-delete');
+
+      forms.forEach(form => {
+        form.addEventListener('submit', (e) => {
+          // Captura o nome do contato armazenado no botão
+          const nomeContato = form.querySelector('button').dataset.nome || 'este contato';
+
+          // Exibe a janela de confirmação
+          const confirmar = confirm(`Tem certeza que deseja excluir o contato "${nomeContato}"?`);
+
+          // Caso o usuário cancele, impede o envio do formulário
+          if (!confirmar) e.preventDefault();
+        });
+      });
+    });
+  </script>
 </body>
 </html>
